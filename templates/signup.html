@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('static/background-image.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .signup-form {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .signup-form h2 {
+            margin-top: 0;
+            font-size: 1.8em;
+            color: #004080;
+        }
+        .signup-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .signup-form input[type="text"], .signup-form input[type="password"] {
+            width: calc(100% - 22px);
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        .signup-form input[type="submit"] {
+            background: #004080;
+            border: none;
+            color: #fff;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+        .signup-form input[type="submit"]:hover {
+            background: #003366;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="signup-form">
+            <h2>Sign Up</h2>
+            <form action="/signup" method="POST">
+                <label for="new_username">Username:</label>
+                <input type="text" id="new_username" name="new_username" required>
+                <label for="new_password">create Password:</label>
+                <input type="password" id="new_password" name="new_password" required>
+                <input type="submit" value="Sign Up">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

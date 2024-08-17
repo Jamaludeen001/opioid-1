@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML Table Example</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<table>
+    <thead>
+        <tr>
+            <th>Column 1</th>
+            <th>Column 2</th>
+            <th>Column 3</th>
+            <th>Column 4</th>
+            <th>Column 5</th>
+            <th>Column 6</th>
+            <th>Column 7</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="3">Row 1, Col 1</td>
+            <td rowspan="3">Row 1, Col 2</td>
+            <td rowspan="3">Row 1, Col 3</td>
+            <td>Row 1, Col 4</td>
+            <td>Row 1, Col 5</td>
+            <td>Row 1, Col 6</td>
+            <td>Row 1, Col 7</td>
+            
+        </tr>
+        <tr>
+            <td>Row 2, Col 4</td>
+            <td>Row 2, Col 5</td>
+            <td>Row 2, Col 6</td>
+            <td>Row 2, Col 7</td>
+            
+        </tr>
+        <tr>
+            <td>Row 3, Col 4</td>
+            <td>Row 3, Col 5</td>
+            <td>Row 3, Col 6</td>
+            <td>Row 3, Col 7</td>
+        </tr>
+        <tr>
+            <td colspan="4">Last Row Spanning 5 Columns</td>
+            <td>Last Col 5</td>
+            <td>Last Col 6</td>
+            <td>Last Col 7</td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

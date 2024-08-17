@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Patient</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .form-group {
+            flex: 1 1 48%;
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="datetime-local"], select {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .full-width {
+            flex: 1 1 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Add New Patient</h2>
+    <form method="POST" action="{{ url_for('add_new_data') }}">
+
+        <div class="form-group">
+            <label for="admittime">Admit Time:</label>
+            <input type="datetime-local" id="admittime" name="admittime" required>
+        </div>
+
+        <div class="form-group">
+            <label for="dischtime">Discharge Time:</label>
+            <input type="datetime-local" id="dischtime" name="dischtime" required>
+        </div>
+
+        <div class="form-group">
+            <label for="marital_status">Marital Status:</label>
+            <select id="marital_status" name="marital_status" required>
+                <option value="DIVORCED">DIVORCED</option>
+                <option value="MARRIED">MARRIED</option>
+                <option value="SEPARATED">SEPARATED</option>
+                <option value="SINGLE">SINGLE</option>
+                <option value="UNKNOWN (DEFAULT)">UNKNOWN (DEFAULT)</option>
+                <option value="WIDOWED">WIDOWED</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="insurance">Insurance:</label>
+            <select id="insurance" name="insurance" required>
+                <option value="Government">Government</option>
+                <option value="Medicaid">Medicaid</option>
+                <option value="Medicare">Medicare</option>
+                <option value="Private">Private</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="diagnosis">Diagnosis:</label>
+            <input type="text" id="diagnosis" name="diagnosis" required>
+        </div>
+
+        <div class="form-group">
+            <label for="hospital_expire_flag">Hospital Expire Flag:</label>
+            <select id="hospital_expire_flag" name="hospital_expire_flag" required>
+                <option value="0">0</option>
+                <option value="1">1</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="drug_name_generic">Drug Name (Generic):</label>
+            <input type="text" id="drug_name_generic" name="drug_name_generic" required>
+        </div>
+
+        <div class="form-group">
+            <label for="drug_type">Drug Type:</label>
+            <select id="drug_type" name="drug_type" required>
+                <option value="ADDITIVE">ADDITIVE</option>
+                <option value="BASE">BASE</option>
+                <option value="MAIN">MAIN</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="dose_val_rx">standard Dose Value (Rx):</label>
+            <input type="text" id="dose_val_rx" name="dose_val_rx" required>
+        </div>
+
+        <div class="form-group">
+            <label for="dose_unit_rx">standard Dose Unit (Rx):</label>
+            <select id="dose_unit_rx" name="dose_unit_rx" required>
+                <option value="AMP">AMP</option>
+                <option value="Appl">Appl</option>
+                <option value="BAG">BAG</option>
+                <option value="CAP">CAP</option>
+                <!-- Add other options here -->
+                <option value="mg">mg</option>
+                <option value="mL">mL</option>
+                <option value="mcg">mcg</option>
+                <option value="mg PE">mg PE</option>
+                <option value="VIAL">VIAL</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="form_val_disp">dosage Value Dispensed:</label>
+            <input type="text" id="form_val_disp" name="form_val_disp" required>
+        </div>
+
+        <div class="form-group">
+            <label for="form_unit_disp">dosage Unit Dispensed:</label>
+            <select id="form_unit_disp" name="form_unit_disp" required>
+                <option value="AMP">AMP</option>
+                <option value="Appl">Appl</option>
+                <option value="BAG">BAG</option>
+                <option value="CAP">CAP</option>
+                <!-- Add other options here -->
+                <option value="mg">mg</option>
+                <option value="mL">mL</option>
+                <option value="mcg">mcg</option>
+                <option value="mg PE">mg PE</option>
+                <option value="VIAL">VIAL</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="startdate">Start Date:</label>
+            <input type="datetime-local" id="startdate" name="startdate" required>
+        </div>
+
+        <div class="form-group">
+            <label for="enddate">End Date:</label>
+            <input type="datetime-local" id="enddate" name="enddate" required>
+        </div>
+
+        <div class="form-group full-width">
+            <label for="admission_type">Admission Type:</label>
+            <select id="admission_type" name="admission_type" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+        </div>
+
+        <button type="submit">Add Patient</button>
+    </form>
+</div>
+
+</body>
+</html>

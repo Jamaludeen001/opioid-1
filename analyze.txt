@@ -1,0 +1,50 @@
+# List of common opioids (this list can be expanded based on the dataset)
+opioids = [
+    "Morphine", "Oxycodone", "Hydrocodone", "Fentanyl", "Codeine", "Hydromorphone",
+    "Methadone", "Buprenorphine", "Oxymorphone", "Meperidine", "Tapentadol",
+    "Tramadol"
+]
+
+# Filter the prescriptions to include only those that are opioids
+opioid_prescriptions = prescriptions_df[prescriptions_df['drug_name_generic'].str.contains('|'.join(opioids), case=False, na=False)]
+
+# Merge the filtered opioid prescriptions with admissions data
+merged_df = pd.merge(admissions_df, opioid_prescriptions[['subject_id', 'hadm_id']], on=['subject_id', 'hadm_id'], how='left', indicator=True)
+
+# Create a new column `opioid_abuse` based on the presence of opioid prescriptions
+merged_df['opioid_abuse'] = merged_df['_merge'].apply(lambda x: 'yes' if x == 'both' else 'no')
+
+# Drop the merge indicator column
+merged_df.drop(columns=['_merge'], inplace=True)
+
+# Display the first few rows of the updated dataframe
+merged_df.head()
+-------------------------------------------------------------------------------------------
+# List of common opioids
+opioids = [
+    "Morphine", "Oxycodone", "Hydrocodone", "Fentanyl", "Codeine", "Hydromorphone",
+    "Methadone", "Buprenorphine", "Oxymorphone", "Meperidine", "Tapentadol", "Tramadol"
+]
+
+# Filter the prescriptions to include only those that are opioids
+opioid_prescriptions = prescriptions_df[prescriptions_df['drug_name_generic'].str.contains('|'.join(opioids), case=False, na=False)]
+
+# Merge the filtered opioid prescriptions with admissions data
+merged_df = pd.merge(admissions_df, opioid_prescriptions[['subject_id', 'hadm_id', 'startdate', 'enddate']], on=['subject_id', 'hadm_id'], how='left', indicator=True)
+
+# Create a new column `opioid_abuse` based on the presence of opioid prescriptions
+merged_df['opioid_abuse'] = merged_df['_merge'].apply(lambda x: 'yes' if x == 'both' else 'no')
+
+# Calculate the duration of opioid prescription in days
+merged_df['startdate'] = pd.to_datetime(merged_df['startdate'])
+merged_df['enddate'] = pd.to_datetime(merged_df['enddate'])
+merged_df['opioid_duration'] = (merged_df['enddate'] - merged_df['startdate']).dt.days
+
+# Update `opioid_abuse` column based on duration
+merged_df['opioid_abuse'] = merged_df.apply(lambda x: 'yes' if x['opioid_abuse'] == 'yes' and x['opioid_duration'] > 7 else 'no', axis=1)
+
+# Drop the merge indicator column
+merged_df.drop(columns=['_merge'], inplace=True)
+
+# Display the first few rows of the updated dataframe
+merged_df.head()

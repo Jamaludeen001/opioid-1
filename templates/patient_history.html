@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient History</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #004080;
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            border-bottom: 4px solid #003366;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .history-box {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .history-box h2 {
+            margin-top: 0;
+            font-size: 1.8em;
+            color: #004080;
+            text-align: center;
+        }
+        .error-message {
+            color: #dc3545;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            min-width: 800px;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        footer {
+            background-color: #004080;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .back-link {
+            display: block;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .back-link a {
+            color: #004080;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        /* Responsive table styles */
+        @media (max-width: 768px) {
+            table, th, td {
+                display: block;
+                width: 100%;
+            }
+            thead {
+                display: none;
+            }
+            tr {
+                margin-bottom: 15px;
+                display: block;
+            }
+            td {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+            }
+            td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                width: 50%;
+                display: inline-block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Physician Portal</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <!-- Back link section -->
+        <div class="back-link">
+            <a href="{{ url_for('physician_working', patient_id=patient_id) }}">Back to Physician Working Page</a>
+        </div>
+        <div class="history-box">
+            <h2>Patient Medical History</h2>
+            {% if error %}
+                <div class="error-message">
+                    <p>{{ error }}</p>
+                </div>
+            {% else %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Subject ID</th>
+                            <th>Admission Time</th>
+                            <th>Discharge Time</th>
+                            <th>Diagnosis</th>
+                            <th>Drug Name</th>
+                            <th>Dosage Level</th>
+                            <th>Dosage Unit</th>
+                            <th>Dosage Level Given</th>
+                            <th>Dosage Units Given</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in history %}
+                            <tr>
+                                <td data-label="Subject ID">{{ record.subject_id }}</td>
+                                <td data-label="Admission Time">{{ record.admittime }}</td>
+                                <td data-label="Discharge Time">{{ record.dischtime }}</td>
+                                <td data-label="Diagnosis">{{ record.diagnosis }}</td>
+                                <td data-label="Drug Name">{{ record.drug }}</td>
+                                <td data-label="Dosage Level">{{ record.dose_val_rx }}</td>
+                                <td data-label="Dosage Unit">{{ record.dose_unit_rx }}</td>
+                                <td data-label="Dosage Level Given">{{ record.form_val_disp }}</td>
+                                <td data-label="Dosage Units Given">{{ record.form_unit_disp }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

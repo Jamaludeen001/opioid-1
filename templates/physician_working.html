@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physician Working Page</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #004080;
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            border-bottom: 4px solid #003366;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .search-form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .search-form input {
+            padding: 12px;
+            width: calc(100% - 120px);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+        .search-form button {
+            padding: 12px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 120px;
+            margin-left: 10px;
+            font-size: 1em;
+        }
+        .search-form button:hover {
+            background-color: #0056b3;
+        }
+        .working-form {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .working-form h2 {
+            margin-top: 0;
+            font-size: 1.8em;
+            color: #004080;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        .button-group button {
+            padding: 12px 20px;
+            border: none;
+            background-color: #003366;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-size: 1em;
+            width: 100%;
+            max-width: 200px;
+        }
+        .button-group button:hover {
+            background-color: #218838;
+        }
+        .error-message {
+            color: #dc3545;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1em;
+        }
+        .guidance {
+            margin-top: 30px;
+            font-size: 1em;
+            color: #333;
+        }
+        .guidance h3 {
+            font-size: 1.4em;
+            color: #004080;
+            margin-bottom: 15px;
+        }
+        .guidance .patient-id {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .guidance ul {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+        .guidance ul li {
+            margin-bottom: 10px;
+        }
+        .guidance .table-container {
+            margin-top: 20px;
+        }
+        .guidance table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .guidance table, th, td {
+            border: 1px solid #ddd;
+        }
+        .guidance th, td {
+            padding: 10px;
+            text-align: left;
+            font-size: 0.9em;
+        }
+        .guidance th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Physician Working Area</h1>
+    </header>
+    <div class="container">
+        <form action="/physician_working" method="POST" class="search-form">
+            <input type="text" name="patient_id" placeholder="Enter Patient ID" required>
+            <button type="submit">Search</button>
+        </form>
+        <div class="working-form">
+            {% if patient %}
+                <div class="button-group">
+                    <form action="/add_patient" method="GET">
+                        <button type="submit">Add Patient data</button>
+                    </form>
+                    <form action="/patient_history" method="GET">
+                        <button type="submit">Patient History</button>
+                    </form>
+                    <form action="/check_risk" method="GET">
+                        <button type="submit">Check Risk</button>
+                    </form>
+                </div>
+                <div class="guidance">
+                    <div class="patient-id">
+                        <p><strong>Patient ID:</strong> {{ patient['subject_id'] }}</p>
+                    </div>
+                    <h3>Assessment Guide for Opioid Abuse</h3>
+                    <ul>
+                        <li><strong>Evaluate Dosage Patterns:</strong> Review the patient's medication records for dosage amounts and frequency. Frequent or high dosages may indicate a risk of opioid abuse.</li>
+                        <li><strong>Monitor Usage Duration:</strong> Long-term use of opioids can increase the risk of dependence. Assess the duration for which the patient has been on opioid treatment.</li>
+                        <li><strong>Assess Medication Adjustments:</strong> Frequent adjustments in dosage or medication may be a sign of escalating use or dependency. Track changes over time.</li>
+                        <li><strong>Look for Behavioral Changes:</strong> Be attentive to any behavioral changes in the patient, such as increased requests for medication or signs of withdrawal when dosages are missed.</li>
+                        <li><strong>Consider Drug Interactions:</strong> Check for interactions with other medications that could enhance the effects of opioids, potentially increasing the risk of abuse.</li>
+                    </ul>
+                    <div class="table-container">
+                        <h3>Dosage Review Table</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Criteria</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Dosage Amount</td>
+                                    <td>High dosage amounts can be a risk factor for opioid abuse. Review the patient's prescribed amounts carefully.</td>
+                                </tr>
+                                <tr>
+                                    <td>Frequency</td>
+                                    <td>Increased frequency of dosage adjustments might indicate misuse or dependence.</td>
+                                </tr>
+                                <tr>
+                                    <td>Duration</td>
+                                    <td>Long-term opioid use should be monitored for signs of dependency.</td>
+                                </tr>
+                                <tr>
+                                    <td>Behavioral Indicators</td>
+                                    <td>Look for signs of behavioral changes related to opioid use, such as increased demands for medication.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% else %}
+                <div class="button-group">
+                    <form action="/add_new_patient" method="GET">
+                        <button type="submit">Add New Patient</button>
+                    </form>
+                </div>
+            {% endif %}
+            {% if error %}
+                <div class="error-message">
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
